@@ -13,7 +13,7 @@ TODO:
 
 //setup variables
 const discord = require("discord.js"); //discord.js api
-const auth = require("./auth.json"); //token file for discord
+const auth = require("./auth.js"); //token file for discord
 const fs = require("fs"); //file writing
 const util = require("util"); //string formatting
 const http = require("https"); //api access
@@ -41,14 +41,14 @@ client.on("message", message => {
   if(message.author.bot) return(1);
 
   //ensure that user settings exist for message author
-  if(!fs.existsSync(util.format("./usersettings/%s.json", message.author.id))) {
-    let defaultUserValues = {
-      userName: message.author.username,
-      gamertag: null
-    }
-    let jsonUserValues = JSON.stringify(defaultUserValues, null, 2);
-    fs.writeFileSync(util.format("./usersettings/%s.json", message.author.id), jsonUserValues);
-  }
+  // if(!fs.existsSync(util.format("./usersettings/%s.json", message.author.id))) {
+  //   let defaultUserValues = {
+  //     userName: message.author.username,
+  //     gamertag: null
+  //   }
+  //   let jsonUserValues = JSON.stringify(defaultUserValues, null, 2);
+  //   fs.writeFileSync(util.format("./usersettings/%s.json", message.author.id), jsonUserValues);
+  // }
 
   //update games message
   amtServers = client.guilds.size;
@@ -65,8 +65,8 @@ client.on("message", message => {
     member: message.member,
     embedcolor: 39423
   };
-  const fileNameUser = util.format("./usersettings/%s.json", eventVariables.userID);
-  var usersettings = require(fileNameUser);
+  // const fileNameUser = util.format("./usersettings/%s.json", eventVariables.userID);
+  // var usersettings = require(fileNameUser);
 
 
 
@@ -101,8 +101,8 @@ client.on("message", message => {
         //create help message
         var helpMessage = "**help** (h): shows this list\n";
         helpMessage += "usage: .help\n\n";
-        helpMessage += "**link** (l): links your gamertag to your discord account\n";
-        helpMessage += "usage: .link <gamertag>\n\n";
+        // helpMessage += "**link** (l): links your gamertag to your discord account\n";
+        // helpMessage += "usage: .link <gamertag>\n\n";
         helpMessage += "**unranked** (ur): shows unranked stats for a given player in a playlist\n";
         helpMessage += "usage: .unranked <teamwar/b3> <gamertag>\n\n";
         helpMessage += "**ranked** (r): shows ranked stats for a given player in a playlist\n";
@@ -164,8 +164,8 @@ client.on("message", message => {
         }
 
         //change gamertag in user settings
-        usersettings.gamertag = gamertagToStore;
-        fs.writeFileSync(fileNameUser, JSON.stringify(usersettings, null, 2));
+        // usersettings.gamertag = gamertagToStore;
+        // fs.writeFileSync(fileNameUser, JSON.stringify(usersettings, null, 2));
 
         //send confirmation message
         eventVariables.channel.send(util.format("<@!%s>, your gamertag has been set to '%s'.", eventVariables.userID, gamertagToStore));
@@ -185,18 +185,18 @@ client.on("message", message => {
         }
 
         //check for non-linked gamertag
-        if(args[0] == null && usersettings.gamertag == null) {
-          eventVariables.channel.send(util.format("<@!%s>, use .link <gamertag> to link your gamertag to your discord.", eventVariables.userID));
-          return(1);
-        }
+        // if(args[0] == null && usersettings.gamertag == null) {
+        //   eventVariables.channel.send(util.format("<@!%s>, use .link <gamertag> to link your gamertag to your discord.", eventVariables.userID));
+        //   return(1);
+        // }
 
         //get gamertag
         let gamertagUnranked;
-        if(args[0] == null) {
-          gamertagUnranked = usersettings.gamertag;
-        } else {
+        // if(args[0] == null) {
+        //   gamertagUnranked = usersettings.gamertag;
+        // } else {
           gamertagUnranked = args.join(" ");
-        }
+        // }
 
         //check for correct argument
         if(gamertagUnranked.length > 15) {
@@ -246,18 +246,18 @@ client.on("message", message => {
         }
 
         //check for non-linked gamertag
-        if(args[0] == null && usersettings.gamertag == null) {
-          eventVariables.channel.send(util.format("<@!%s>, use .link <gamertag> to link your gamertag to your discord.", eventVariables.userID));
-          return(1);
-        }
+        // if(args[0] == null && usersettings.gamertag == null) {
+        //   eventVariables.channel.send(util.format("<@!%s>, use .link <gamertag> to link your gamertag to your discord.", eventVariables.userID));
+        //   return(1);
+        // }
 
         //get gamertag
         let gamertagRanked;
-        if(args[0] == null) {
-          gamertagRanked = usersettings.gamertag;
-        } else {
+        // if(args[0] == null) {
+        //   gamertagRanked = usersettings.gamertag;
+        // } else {
           gamertagRanked = args.join(" ");
-        }
+        // }
 
         //check for correct argument
         if(gamertagRanked.length > 15) {
@@ -320,18 +320,18 @@ client.on("message", message => {
       //command: leaders
       case "leaders":
         //check for correct arguments
-        if(args[0] == null && usersettings.gamertag == null) {
-          eventVariables.channel.send(util.format("<@!%s>, use .link <gamertag> to link your gamertag to your discord.", eventVariables.userID));
-          return(1);
-        }
+        // if(args[0] == null && usersettings.gamertag == null) {
+        //   eventVariables.channel.send(util.format("<@!%s>, use .link <gamertag> to link your gamertag to your discord.", eventVariables.userID));
+        //   return(1);
+        // }
 
         //get gamertag
         let gamertagLeaders;
-        if(args[0] == null) {
-          gamertagLeaders = usersettings.gamertag;
-        } else {
+        // if(args[0] == null) {
+        //   gamertagLeaders = usersettings.gamertag;
+        // } else {
           gamertagLeaders = args.join(" ");
-        }
+        // }
 
         //check for correct argument
         if(gamertagLeaders.length > 15) {
@@ -357,18 +357,18 @@ client.on("message", message => {
 
       case "lastbuild":
         //check for correct arguments
-        if(args[0] == null && usersettings.gamertag == null) {
-          eventVariables.channel.send(util.format("<@!%s>, use .link <gamertag> to link your gamertag to your discord.", eventVariables.userID));
-          return(1);
-        }
+        // if(args[0] == null && usersettings.gamertag == null) {
+        //   eventVariables.channel.send(util.format("<@!%s>, use .link <gamertag> to link your gamertag to your discord.", eventVariables.userID));
+        //   return(1);
+        // }
 
         //get gamertag
         let gamertagBuild;
-        if(args[0] == null) {
-          gamertagBuild = usersettings.gamertag;
-        } else {
+        // if(args[0] == null) {
+        //   gamertagBuild = usersettings.gamertag;
+        // } else {
           gamertagBuild = args.join(" ");
-        }
+        // }
 
         //check for correct argument
         if(gamertagBuild.length > 15) {

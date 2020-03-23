@@ -1,5 +1,5 @@
 //setup variables
-const auth = require("../auth.json"); //auth token and api key
+const auth = require("../auth.js"); //auth token and api key
 const util = require("util"); //string formatting
 const http = require("https"); //api access
 const helperFunctions = require("./helperFunctions"); //helper functions file
